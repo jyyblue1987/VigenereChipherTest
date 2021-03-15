@@ -26,7 +26,7 @@ using namespace std;
 
 //Declare vigenere cipher
 string vigenereCipher(const char *key, const char *plain);
-void vigenereDecipher(char* cipherText,char* k);
+string vigenereDecipher(const char *key, const char *cipher);
 
 int main(){
 	char choice = '0';
@@ -59,6 +59,9 @@ int main(){
 
 			string cipher = vigenereCipher(secret.c_str(), message.c_str());
 			cout << "Encrypted text:   " << cipher << endl;
+
+			string decrpyted = vigenereDecipher(secret.c_str(), cipher.c_str());
+			cout << "Decrypted text:   " << decrpyted << endl;
 
 		}
 		if( choice == '2' )
@@ -96,38 +99,26 @@ string vigenereCipher(const char *key, const char *plain)
 	return result;
 }
 
-void vigenereDecipher(char* cipherText, char* k){
+string vigenereDecipher(const char *key, const char *cipher){
     
-    int i;
-    char decipher;
-    int decipherValue;
-    int len = strlen(k);
-    
-    //Loop through the length of the plain text string
-    for(i=0; i<strlen(cipherText); i++){
-        
-        //if the character is lowercase, where range is [97 -122]
-        if(islower(cipherText[i]))
-        {
-            decipherValue = ( ((int)cipherText[i]+97 - (int)tolower(k[i % len])-97)+26 ) % 26 +97;
-            decipher = (char)decipherValue;
-        }
-        else // Else it's upper case, where letter range is [65 - 90]
-        {
-            decipherValue = ( ((int)cipherText[i]+65 - (int)toupper(k[i % len])-65)+26 ) % 26 +65;
-            decipher = (char)decipherValue;
-        }
-        
-        //Print the ciphered character if it is alphanumeric (a letter)
-        if(isalpha(cipherText[i]))
-        {
-            printf("%c", decipher);
-        }
-        else //if the character is not a letter then print the character (e.g. space)
-        {
-            printf("%c", cipherText[i]);
-        }
-    }
+	int key_len = strlen(key);
+	int cipher_len = strlen(cipher);
+
+	string result = "";
+
+	int i = 0, j = 0;
+	for(i = 0; i < cipher_len; i++, j++)
+	{
+		if( j >= key_len )
+			j = 0;
+		int c = (cipher[i] - key[j] + 'A');
+		if( c < 'A' )
+			c = 'Z' - 'A' + c  + 1;
+
+		result += (char)c;		
+	}
+
+	return result;
     
     
 }

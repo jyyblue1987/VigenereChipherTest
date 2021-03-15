@@ -85,13 +85,35 @@ string vigenereCipher(const char *key, const char *plain)
 	string result = "";
 
 	int i = 0, j = 0;
+	char k = '0';
+
 	for(i = 0; i < plain_len; i++, j++)
 	{
 		if( j >= key_len )
 			j = 0;
-		int c = (plain[i] + key[j] - 'A');
-		if( c > 'Z' )
-			c = c - 'Z' - 1 + 'A';
+
+		int c = ' ';
+		k = key[j];
+		if( 'a' <= plain[i] && plain[i] <= 'z' )
+		{
+			
+			if( 'A' <= k && k <= 'Z')
+				k = k - 'A' + 'a';
+
+			c = (plain[i] + k - 'a');
+			if( c > 'z' )
+				c = c - 'z' - 1 + 'a';
+		}
+
+		if( 'A' <= plain[i] && plain[i] <= 'Z' )
+		{
+			if( 'a' <= k && k <= 'z')
+				k = k - 'a' + 'A';
+
+			c = (plain[i] + key[j] - 'A');
+			if( c > 'Z' )
+				c = c - 'Z' - 1 + 'A';
+		}
 
 		result += (char)c;		
 	}
@@ -107,13 +129,34 @@ string vigenereDecipher(const char *key, const char *cipher){
 	string result = "";
 
 	int i = 0, j = 0;
+	char k = '0';
 	for(i = 0; i < cipher_len; i++, j++)
 	{
 		if( j >= key_len )
 			j = 0;
-		int c = (cipher[i] - key[j] + 'A');
-		if( c < 'A' )
-			c = 'Z' - 'A' + c  + 1;
+
+		int c = ' ';
+		k = key[j];
+		if( 'a' <= cipher[i] && cipher[i] <= 'z' )
+		{
+
+			if( 'A' <= k && k <= 'Z')
+				k = k - 'A' + 'a';
+
+			c = (cipher[i] - k + 'a');
+			if( c < 'a' )
+				c = 'z' - 'a' + c  + 1;
+		}
+
+		if( 'A' <= cipher[i] && cipher[i] <= 'Z' )
+		{
+			if( 'a' <= k && k <= 'z')
+				k = k - 'a' + 'A';
+
+			c = (cipher[i] - k + 'A');
+			if( c < 'A' )
+				c = 'Z' - 'A' + c  + 1;
+		}		
 
 		result += (char)c;		
 	}

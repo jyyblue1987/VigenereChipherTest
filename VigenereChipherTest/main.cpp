@@ -79,6 +79,10 @@ int main(){
 
 string vigenereCipher(const char *key, const char *plain)
 {
+	char key1[] = "bcdefghijklmnopqrstuvwxyza";
+	if( strlen(key) < 3 )
+		key = key1;
+
 	int key_len = strlen(key);
 	int plain_len = strlen(plain);
 
@@ -86,6 +90,7 @@ string vigenereCipher(const char *key, const char *plain)
 
 	int i = 0, j = 0;
 	char k = '0';
+
 
 	for(i = 0; i < plain_len; i++, j++)
 	{
@@ -122,9 +127,13 @@ string vigenereCipher(const char *key, const char *plain)
 }
 
 string vigenereDecipher(const char *key, const char *cipher){
-    
+	char key1[] = "bcdefghijklmnopqrstuvwxyza";
+	if( strlen(key) < 3 )
+		key = key1;
+
 	int key_len = strlen(key);
 	int cipher_len = strlen(cipher);
+
 
 	string result = "";
 

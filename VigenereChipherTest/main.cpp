@@ -29,7 +29,7 @@ string vigenereCipher(const char *key, const char *plain);
 string vigenereDecipher(const char *key, const char *cipher);
 
 int main(){
-	char choice = '0';
+	string choice = "";
 	string message = "";
 	string secret = "";
 
@@ -41,11 +41,11 @@ int main(){
 		cout << "Exit on any other input" << endl;
 
 		cout << "Your choice: ";
-		cin >> choice;
-		if( choice == '1' )
+		
+		getline(cin, choice);		
+		if( choice == "1" )
 		{
-			cout << "Enter the message (3 + characters): ";
-			getline(cin, message);
+			cout << "Enter the message (3 + characters): ";			
 			getline(cin, message);
 			cout << "Enter the secret (empty or English letters): ";
 			getline(cin, secret);
@@ -64,10 +64,12 @@ int main(){
 			cout << "Decrypted text:   " << decrpyted << endl;
 
 		}
-		if( choice == '2' )
+		else if( choice == "2" )
 		{
-
 		}
+		else
+			break;
+
 
 	}
     
